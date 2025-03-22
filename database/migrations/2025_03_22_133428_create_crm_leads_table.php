@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Schema::disableForeignKeyConstraints();
+
         Schema::create('crm_leads', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('assigned_counsellor', 100)->index();
+            $table->id();
+            $table->foreignId('user_id')->constrained('crm_users');
             $table->string('subject', 255);
             $table->enum('source', [""]);
             $table->decimal('lead_value', 10, 2)->default(0);
@@ -26,6 +28,8 @@ return new class extends Migration
             $table->dateTime('created_at')->index()->useCurrent();
             $table->dateTime('updated_at')->index()->useCurrent();
         });
+
+        // Schema::enableForeignKeyConstraints();
     }
 
     /**
