@@ -20,7 +20,7 @@ export default function Dashboard() {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-                <div className="flex justify-end gap-4 mb-4">
+            <div className="flex justify-end gap-4 mb-4">
                 <DatePicker
                     value={fromDate}
                     onChange={setFromDate}
