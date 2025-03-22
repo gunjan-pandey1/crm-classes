@@ -13,15 +13,14 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('crm_users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('first_name', 100);
-            $table->string('last_name', 100);
-            $table->string('email', 255)->unique();
-            $table->string('phone', 20)->nullable()->default('DEFAULT NULL');
-            $table->string('password', 255);
-            $table->enum('role', [""])->index();
-            $table->enum('status', [""])->index();
+        Schema::create('crm_courses', function (Blueprint $table) {
+            $table->id();
+            $table->string('sku', 50)->index();
+            $table->string('course_name', 255)->index();
+            $table->decimal('rate', 10, 2)->default(0);
+            $table->unsignedInteger('total_seats');
+            $table->unsignedInteger('allotted_seats');
+            $table->unsignedInteger('available_seats');
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
         });
@@ -34,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('crm_users');
+        Schema::dropIfExists('crm_courses');
     }
 };

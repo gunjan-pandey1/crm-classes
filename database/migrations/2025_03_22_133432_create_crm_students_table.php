@@ -11,19 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::disableForeignKeyConstraints();
+        // Schema::disableForeignKeyConstraints();
 
         Schema::create('crm_students', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
+            $table->foreignId('quotes_id')->constrained('crm_quotes');
+            $table->foreignId('organization_id')->constrained('crm_organizations');
+            $table->foreignId('courses_id')->constrained('crm_courses');
             $table->string('name', 255)->index();
             $table->string('email', 255)->index();
             $table->string('contact_number', 20)->index();
-            $table->unsignedInteger('organization_id')->index()->nullable()->default('DEFAULT NULL');
-            $table->foreign('organization_id')->references('id')->on('crm_organizations');
             $table->dateTime('created_at')->index()->useCurrent();
+            $table->dateTime('updated_at');
         });
 
-        Schema::enableForeignKeyConstraints();
+        // Schema::enableForeignKeyConstraints();
     }
 
     /**
