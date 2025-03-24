@@ -15,12 +15,12 @@ return new class extends Migration
 
         Schema::create('crm_access_rights', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('crm_users');
-            $table->string('module_name', 100);
-            $table->integer('can_view');
-            $table->integer('can_create');
-            $table->integer('can_edit');
-            $table->integer('can_delete');
+            $table->foreignId('user_id')->constrained('crm_users')->nullable();
+            $table->string('module_name', 100)->nullable();
+            $table->integer('can_view')->nullable();
+            $table->integer('can_create')->nullable();
+            $table->integer('can_edit')->nullable();
+            $table->integer('can_delete')->nullable();
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
         });

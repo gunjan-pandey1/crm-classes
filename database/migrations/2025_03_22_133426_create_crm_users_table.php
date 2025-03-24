@@ -15,13 +15,13 @@ return new class extends Migration
 
         Schema::create('crm_users', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_type')->index()->default(0);
-            $table->string('first_name', 100);
-            $table->string('last_name', 100);
+            $table->integer('user_type')->index()->default(0)->nullable();
+            $table->string('first_name', 100)->nullable();
+            $table->string('last_name', 100)->nullable();
             $table->string('email', 255)->unique();
-            $table->string('phone', 20)->nullable()->default('DEFAULT NULL');
+            $table->string('phone', 20)->nullable();
             $table->string('password', 255);
-            $table->enum('status', [""])->index();
+            $table->tinyInteger('status')->default(1)->check('status IN (0, 1)');
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
         });

@@ -6,31 +6,28 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Lead extends Model
+class CrmFullAccessRight extends Model
 {
     use HasFactory;
-    protected $table = 'crm_leads';
+    protected $table = 'crm_full_access_rights';
 
     protected $fillable = [
         'user_id',
-        'subject',
-        'source',
-        'lead_value',
-        'lead_type',
-        'tag_name',
-        'contact_student',
-        'stage',
-        'rotten_lead',
-        'expected_close_date'
+        'leads',
+        'quotes',
+        'activities',
+        'organization',
+        'students',
+        'courses'
     ];
 
     protected $casts = [
-        'lead_value' => 'decimal:2',
-        'source' => 'string',
-        'lead_type' => 'string',
-        'stage' => 'string',
-        'rotten_lead' => 'string',
-        'expected_close_date' => 'datetime',
+        'leads' => 'integer',
+        'quotes' => 'integer',
+        'activities' => 'integer',
+        'organization' => 'integer',
+        'students' => 'integer',
+        'courses' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime'
     ];

@@ -2,22 +2,31 @@
 
 namespace Database\Factories;
 
+use App\Models\AccessRight;
+use App\Models\CrmUser;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\AccessRight>
- */
 class AccessRightFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
+    protected $model = AccessRight::class;
+
+    public function definition()
     {
         return [
-            //
+            'user_id' => CrmUser::factory(),
+            'module_name' => $this->faker->randomElement([
+                'dashboard',
+                'users',
+                'students',
+                'courses',
+                'batches',
+                'payments',
+                'reports'
+            ]),
+            'can_view' => $this->faker->integer(),
+            'can_create' => $this->faker->integer(),
+            'can_edit' => $this->faker->integer(),
+            'can_delete' => $this->faker->integer(),
         ];
     }
 }
