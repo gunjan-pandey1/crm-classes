@@ -3,8 +3,6 @@
 namespace App\Services;
 
 use App\Models\CrmUser;
-use App\Models\AccessRight;
-use App\Models\FullAccessRight;
 
 class AuthorizationService
 {

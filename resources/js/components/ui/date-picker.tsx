@@ -1,71 +1,63 @@
-import * as React from "react";
-import { format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
+"use client"
+
+import React, { useState, useEffect } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 
-interface DatePickerProps {
-  value?: Date;
-  onChange?: (date?: Date) => void;
-  placeholder?: string;
+interface DatePickerWithRangeProps extends React.HTMLAttributes<HTMLDivElement> {
+  fromDate?: Date;
+  toDate?: Date;
+  onFromDateChange?: (date: Date | undefined) => void;
+  onToDateChange?: (date: Date | undefined) => void;
+  className?: string;
 }
 
-export function DatePicker({ value, onChange, placeholder }: DatePickerProps) {
+export function DatePickerWithRange(props: DatePickerWithRangeProps) {
+  const { className, fromDate, toDate, onFromDateChange, onToDateChange } = props;
+  const [startDate, setStartDate] = useState<Date | null>(fromDate || null);
+  const [endDate, setEndDate] = useState<Date | null>(toDate || null);
+
+  useEffect(() => {
+    setStartDate(fromDate || null);
+  }, [fromDate]);
+
+  useEffect(() => {
+    setEndDate(toDate || null);
+  }, [toDate]);
+
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          variant="ghost" 
-          className="flex items-center gap-2 text-gray-300 hover:bg-transparent hover:text-white p-0"
-        >
-          <CalendarIcon className="h-5 w-5" />
-          <span>{value ? format(value, "PPP") : placeholder}</span>
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent 
-        className="p-0 bg-[#0f172a] border-none w-auto shadow-lg" 
-        align="end"
-      >
-        <div className="p-3">
-          <div className="text-center mb-2 text-white font-medium">
-            March 2025
-          </div>
-          <div className="grid grid-cols-7 gap-1 text-xs mb-1 text-center">
-            <div className="text-gray-400">Su</div>
-            <div className="text-gray-400">Mo</div>
-            <div className="text-gray-400">Tu</div>
-            <div className="text-gray-400">We</div>
-            <div className="text-gray-400">Th</div>
-            <div className="text-gray-400">Fr</div>
-            <div className="text-gray-400">Sa</div>
-          </div>
-          <div className="grid grid-cols-7 gap-1 text-center">
-            {[23, 24, 25, 26, 27, 28, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 1, 2, 3, 4, 5].map((day, index) => (
-              <button
-                key={index}
-                className={cn(
-                  "h-8 w-8 rounded-full text-sm flex items-center justify-center",
-                  "hover:bg-gray-700 text-white",
-                  day === 26 && "bg-blue-600"
-                )}
-                onClick={() => {
-                  const today = new Date();
-                  const selectedDate = new Date(2025, 2, day < 23 ? day : day > 31 ? day - 31 : day);
-                  onChange?.(selectedDate);
-                }}
-              >
-                {day}
-              </button>
-            ))}
-          </div>
-        </div>
-      </PopoverContent>
-    </Popover>
+    <div className={cn("flex items-center gap-2", className)}>
+      <div className="relative">
+        <DatePicker
+          selected={fromDate}
+          onChange={(date) => onFromDateChange?.(date || undefined)}
+          selectsStart
+          startDate={fromDate}
+          endDate={toDate}
+          dateFormat="MMM dd, yyyy"
+          placeholderText="Start Date"
+          className="w-[150px] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+        />
+        <CalendarIcon className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
+      </div>
+      <span className="text-sm text-gray-500">to</span>
+      <div className="relative">
+        <DatePicker
+          selected={toDate}
+          onChange={(date) => onToDateChange?.(date || undefined)}
+          selectsEnd
+          startDate={fromDate}
+          endDate={toDate}
+          minDate={fromDate}
+          dateFormat="MMM dd, yyyy"
+          placeholderText="End Date"
+          className="w-[150px] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+        />
+        <CalendarIcon className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
+      </div>
+    </div>
   );
 }

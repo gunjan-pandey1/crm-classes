@@ -16,12 +16,15 @@ return new class extends Migration
         Schema::create('crm_users', function (Blueprint $table) {
             $table->id();
             $table->integer('user_type')->index()->default(0);
-            $table->string('first_name', 100);
-            $table->string('last_name', 100);
+            $table->string('name');
+            $table->string('first_name', 100)->nullable();
+            $table->string('last_name', 100)->nullable();
             $table->string('email', 255)->unique();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('phone', 20)->nullable()->default('DEFAULT NULL');
             $table->string('password', 255);
-            $table->enum('status', [""])->index();
+            $table->rememberToken();
+            $table->integer('status')->index()->default(1);
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
         });
