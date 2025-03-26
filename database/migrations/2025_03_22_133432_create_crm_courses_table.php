@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedInteger('total_seats')->nullable();
             $table->unsignedInteger('allotted_seats')->nullable();
             $table->unsignedInteger('available_seats')->nullable();
+            $table->integer('status')->nullable()->index()->default(1);
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
         });

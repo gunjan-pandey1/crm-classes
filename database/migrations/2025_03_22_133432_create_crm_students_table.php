@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('name', 255)->index()->nullable();
             $table->string('email', 255)->index()->nullable();
             $table->string('contact_number', 20)->index()->nullable();
+            $table->integer('status')->nullable()->index()->default(1);
             $table->dateTime('created_at')->index()->useCurrent();
             $table->dateTime('updated_at')->index()->useCurrent()->useCurrentOnUpdate();
         });

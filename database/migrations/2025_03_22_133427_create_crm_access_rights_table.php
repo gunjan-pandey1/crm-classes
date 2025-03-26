@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('can_create')->nullable();
             $table->integer('can_edit')->nullable();
             $table->integer('can_delete')->nullable();
+            $table->integer('status')->nullable()->index()->default(1);
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
         });

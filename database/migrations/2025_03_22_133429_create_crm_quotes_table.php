@@ -22,6 +22,7 @@ return new class extends Migration
             $table->decimal('adjustment', 10, 2)->default(0)->nullable();
             $table->decimal('grand_total', 10, 2)->default(0)->nullable();
             $table->dateTime('expired_at')->index()->nullable();
+            $table->integer('status')->nullable()->index()->default(1);
             $table->dateTime('created_at')->index()->useCurrent();
             $table->dateTime('updated_at')->index()->useCurrent()->useCurrentOnUpdate();
         });

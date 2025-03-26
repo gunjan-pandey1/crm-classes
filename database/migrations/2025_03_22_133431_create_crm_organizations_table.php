@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 255)->index()->nullable();
             $table->unsignedInteger('student_count')->nullable();
+            $table->integer('status')->nullable()->index()->default(1);
             $table->dateTime('created_at')->index()->useCurrent();
             $table->integer('updated_at')->nullable();
         });
