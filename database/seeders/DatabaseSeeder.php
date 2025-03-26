@@ -13,11 +13,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // CrmUser::factory(10)->create();
-
-        CrmUser::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $this->call([
+            CrmUserSeeder::class,
+            AccessRightSeeder::class,
+            CrmFullAccessRightSeeder::class,
+            LeadSeeder::class,
+            QuoteSeeder::class,
+            ActivitySeeder::class,
+            OrganizationSeeder::class,
+            CourseSeeder::class,
+            StudentSeeder::class,
         ]);
     }
 }

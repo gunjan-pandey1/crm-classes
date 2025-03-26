@@ -15,12 +15,12 @@ return new class extends Migration
 
         Schema::create('crm_courses', function (Blueprint $table) {
             $table->id();
-            $table->string('sku', 50)->index();
-            $table->string('course_name', 255)->index();
-            $table->decimal('rate', 10, 2)->default(0);
-            $table->unsignedInteger('total_seats');
-            $table->unsignedInteger('allotted_seats');
-            $table->unsignedInteger('available_seats');
+            $table->string('sku', 50)->index()->nullable();
+            $table->string('course_name', 255)->index()->nullable();
+            $table->decimal('rate', 10, 2)->default(0)->nullable();
+            $table->unsignedInteger('total_seats')->nullable();
+            $table->unsignedInteger('allotted_seats')->nullable();
+            $table->unsignedInteger('available_seats')->nullable();
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
         });

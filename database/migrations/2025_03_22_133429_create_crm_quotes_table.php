@@ -15,14 +15,15 @@ return new class extends Migration
 
         Schema::create('crm_quotes', function (Blueprint $table) {
             $table->id();
-            $table->string('subject', 255);
-            $table->decimal('subtotal', 10, 2)->default(0);
-            $table->decimal('discount', 10, 2)->default(0);
-            $table->decimal('tax', 10, 2)->default(0);
-            $table->decimal('adjustment', 10, 2)->default(0);
-            $table->decimal('grand_total', 10, 2)->default(0);
-            $table->dateTime('expired_at')->index();
+            $table->string('subject', 255)->nullable();
+            $table->decimal('subtotal', 10, 2)->default(0)->nullable();
+            $table->decimal('discount', 10, 2)->default(0)->nullable();
+            $table->decimal('tax', 10, 2)->default(0)->nullable();
+            $table->decimal('adjustment', 10, 2)->default(0)->nullable();
+            $table->decimal('grand_total', 10, 2)->default(0)->nullable();
+            $table->dateTime('expired_at')->index()->nullable();
             $table->dateTime('created_at')->index()->useCurrent();
+            $table->dateTime('updated_at')->index()->useCurrent()->useCurrentOnUpdate();
         });
 
         // Schema::enableForeignKeyConstraints();

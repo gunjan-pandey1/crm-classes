@@ -4,20 +4,20 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Activity>
- */
 class ActivityFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            //
+            'user_id' => \App\Models\CrmUser::factory(),
+            'title' => fake()->sentence(),
+            'is_done' => fake()->randomElement([0, 1]),
+            'comment' => fake()->paragraph(),
+            'lead' => fake()->word(),
+            'type' => fake()->randomElement(['call', 'meeting', 'email', 'task', 'note']),
+            'schedule_from' => fake()->dateTimeBetween('-1 month', '+1 month'),
+            'schedule_to' => fake()->dateTimeBetween('now', '+2 months'),
+            'created_at' => now()
         ];
     }
 }

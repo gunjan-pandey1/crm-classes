@@ -15,14 +15,14 @@ return new class extends Migration
 
         Schema::create('crm_students', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('quotes_id')->constrained('crm_quotes');
-            $table->foreignId('organization_id')->constrained('crm_organizations');
-            $table->foreignId('courses_id')->constrained('crm_courses');
-            $table->string('name', 255)->index();
-            $table->string('email', 255)->index();
-            $table->string('contact_number', 20)->index();
+            $table->foreignId('quotes_id')->constrained('crm_quotes')->nullable();
+            $table->foreignId('organization_id')->constrained('crm_organizations')->nullable();
+            $table->foreignId('courses_id')->constrained('crm_courses')->nullable();
+            $table->string('name', 255)->index()->nullable();
+            $table->string('email', 255)->index()->nullable();
+            $table->string('contact_number', 20)->index()->nullable();
             $table->dateTime('created_at')->index()->useCurrent();
-            $table->dateTime('updated_at');
+            $table->dateTime('updated_at')->index()->useCurrent()->useCurrentOnUpdate();
         });
 
         // Schema::enableForeignKeyConstraints();

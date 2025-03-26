@@ -15,15 +15,15 @@ return new class extends Migration
 
         Schema::create('crm_full_access_rights', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('crm_users');
-            $table->integer('leads');
-            $table->integer('quotes');
-            $table->integer('activities');
-            $table->integer('organization');
-            $table->integer('students');
-            $table->integer('courses');
-            $table->dateTime('created_at');
-            $table->dateTime('updated_at');
+            $table->foreignId('user_id')->constrained('crm_users')->nullable();
+            $table->integer('leads')->nullable();
+            $table->integer('quotes')->nullable();
+            $table->integer('activities')->nullable();
+            $table->integer('organization')->nullable();
+            $table->integer('students')->nullable();
+            $table->integer('courses')->nullable();
+            $table->dateTime('created_at')->useCurrent();
+            $table->dateTime('updated_at')->useCurrent();
             $table->index('user_id');
         });
 

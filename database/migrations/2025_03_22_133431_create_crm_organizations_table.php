@@ -15,10 +15,10 @@ return new class extends Migration
 
         Schema::create('crm_organizations', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 255)->index();
-            $table->unsignedInteger('student_count');
+            $table->string('name', 255)->index()->nullable();
+            $table->unsignedInteger('student_count')->nullable();
             $table->dateTime('created_at')->index()->useCurrent();
-            $table->integer('updated_at');
+            $table->integer('updated_at')->nullable();
         });
 
         Schema::enableForeignKeyConstraints();

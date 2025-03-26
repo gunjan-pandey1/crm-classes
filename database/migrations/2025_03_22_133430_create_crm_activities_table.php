@@ -15,15 +15,16 @@ return new class extends Migration
 
         Schema::create('crm_activities', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('crm_users');
-            $table->string('title', 255);
-            $table->boolean('is_done');
+            $table->foreignId('user_id')->constrained('crm_users')->nullable();
+            $table->string('title', 255)->nullable();
+            $table->integer('is_done')->nullable();
             $table->text('comment')->nullable();
             $table->string('lead', 255)->index()->nullable();
             $table->string('type', 50)->index()->nullable();
-            $table->dateTime('schedule_from')->index();
-            $table->dateTime('schedule_to')->index();
+            $table->dateTime('schedule_from')->index()->nullable();
+            $table->dateTime('schedule_to')->index()->nullable();
             $table->dateTime('created_at')->index()->useCurrent();
+            // Remove updated_at as it's causing issues
         });
 
         // Schema::enableForeignKeyConstraints();
