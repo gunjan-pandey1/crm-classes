@@ -33,10 +33,15 @@ return [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
-    ],
+    ],  
 
     'algolia' => [
         'app_id' => env('ALGOLIA_APP_ID'),
         'secret' => env('ALGOLIA_SECRET'),
+    ],
+
+    'jwt' => [
+        'private_key_file_full_path' => env('JWT_PRIVATE_KEY_FILE_FULL_PATH'),
+        'passphrase_app' => env('JWT_PASSPHRASE_APP'),
     ],
 ];
