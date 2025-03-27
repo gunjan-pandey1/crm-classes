@@ -4,10 +4,8 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Algolia\AlgoliaSearch\SearchClient;
-use App\Models\Lead;
-use App\Models\Course;
 use App\Models\CrmUser;
-
+use Illuminate\Support\Facades\Log;
 class AlgoliaDbInsert extends Command
 {
     protected $signature = 'app:algolia-db-insert';
@@ -15,76 +13,85 @@ class AlgoliaDbInsert extends Command
 
     public function handle()
     {
-        $client = SearchClient::create(
+        $this->info('Starting Algolia database import...');
+        Log::info('Starting Algolia database import process');
+
+        try {
+            $client = $this->initializeAlgoliaClient();
+            $indices = $this->initializeIndices($client);
+            $this->configureIndices($indices);
+            $this->importData($indices);
+
+            $this->info('All records have been successfully imported to Algolia');
+            Log::info('Algolia import completed successfully');
+        } catch (\Exception $e) {
+            $this->error('Error importing records: ' . $e->getMessage());
+            Log::error('Algolia import failed: ' . $e->getMessage());
+        }
+    }
+
+    private function initializeAlgoliaClient()
+    {
+        $this->info('Initializing Algolia client...');
+        Log::info('Initializing Algolia client');
+        
+        return SearchClient::create(
             config('services.algolia.app_id'),
             config('services.algolia.secret')
         );
+    }
 
-        // Initialize indices
-        $usersIndex = $client->initIndex('users');
-        $leadsIndex = $client->initIndex('leads');
-        $coursesIndex = $client->initIndex('courses');
+    private function initializeIndices($client)
+    {
+        $this->info('Initializing indices...');
+        Log::info('Initializing Algolia indices');
 
-        // Configure index settings (optional)
-        $usersIndex->setSettings([
+        return [
+            'users' => $client->initIndex('users'),
+            'leads' => $client->initIndex('leads'),
+            'courses' => $client->initIndex('courses')
+        ];
+    }
+
+    private function configureIndices($indices)
+    {
+        $this->info('Configuring index settings...');
+        Log::info('Configuring Algolia index settings');
+
+        $indices['users']->setSettings([
             'searchableAttributes' => [
                 'name',
                 'email',
                 'phone'
             ]
         ]);
+    }
 
-        try {
-            // Batch import users
-            $users = CrmUser::chunk(100, function($users) use ($usersIndex) {
-                $records = $users->map(function($user) {
-                    return [
-                        'objectID' => $user->id,
-                        'name' => $user->name,
-                        'email' => $user->email,
-                        'phone' => $user->phone,
-                        // Add more fields as needed
-                    ];
-                })->toArray();
-                
-                $usersIndex->saveObjects($records);
-                $this->info('Imported ' . count($records) . ' users');
-            });
+    private function importData($indices)
+    {
+        $this->info('Starting data import...');
+        Log::info('Beginning data import to Algolia');
 
-            // Batch import leads
-            $leads = Lead::chunk(100, function($leads) use ($leadsIndex) {
-                $records = $leads->map(function($lead) {
-                    return [
-                        'objectID' => $lead->id,
-                        'name' => $lead->name,
-                        'email' => $lead->email,
-                        'status' => $lead->status,
-                        // Add more fields as needed
-                    ];
-                })->toArray();
-                
-                $leadsIndex->saveObjects($records);
-                $this->info('Imported ' . count($records) . ' leads');
-            });
+        // Import users
+        $totalUsers = 0;
+        CrmUser::chunk(100, function($users) use ($indices, &$totalUsers) {
+            $records = $users->map(function($user) {
+                return [
+                    'objectID' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'phone' => $user->phone,
+                ];
+            })->toArray();
+            
+            $indices['users']->saveObjects($records);
+            $totalUsers += count($records);
+            
+            $this->info("Imported {$totalUsers} users so far...");
+            Log::info("Batch import: {$totalUsers} users processed");
+        });
 
-            // Batch import courses
-            $courses = Course::chunk(100, function($courses) use ($coursesIndex) {
-                $records = $courses->map(function($course) {
-                    return [
-                        'objectID' => $course->id,
-                        'title' => $course->title,
-                        'description' => $course->description,
-                        // Add more fields as needed
-                    ];
-                })->toArray();
-                
-                $coursesIndex->saveObjects($records);
-                $this->info('Imported ' . count($records) . ' courses');
-            });
-
-            $this->info('All records have been successfully imported to Algolia');
-        } catch (\Exception $e) {
-            $this->error('Error importing records: ' . $e->getMessage());
-        }
+        $this->info("Total records imported - Users: {$totalUsers}");
+        Log::info("Final import counts - Users: {$totalUsers}");
     }
 }
