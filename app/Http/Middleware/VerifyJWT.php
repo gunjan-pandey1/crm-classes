@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use App\Constants\CommonConstant;
 use App\Exceptions\InvalidTokenException;
 use App\Exceptions\TokenExpiredException;
-use App\Http\Services\JWTService;
+use App\Services\Auth\JWTService;
 use Closure;
 use Exception;
 use Illuminate\Http\Request;

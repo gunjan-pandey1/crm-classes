@@ -55,4 +55,12 @@ class CommonConstant
     public const IS_SND_YES = 1;
 
     public const CURRENCY_ICON = ['INR' => '₹', 'USD' => '$', 'AUD' => 'A$', 'GBP' => '£', 'CAD' => 'C$', 'AED' => 'د.إ'];
+
+    public const ACTION_VIEW = 'view';
+    
+    public const ACTION_CREATE = 'create';
+    
+    public const ACTION_EDIT = 'edit';
+    
+    public const ACTION_DELETE = 'delete';
 }
