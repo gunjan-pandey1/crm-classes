@@ -44,4 +44,9 @@ return [
         'private_key_file_full_path' => env('JWT_PRIVATE_KEY_FILE_FULL_PATH'),
         'passphrase_app' => env('JWT_PASSPHRASE_APP'),
     ],
+
+    'betterstack' => [
+        'source_token' => env('BETTERSTACK_SOURCE_TOKEN'),
+        'endpoint' => env('BETTERSTACK_ENDPOINT', 'https://s1256052.eu-nbg-2.betterstackdata.com'),
+    ],
 ];

@@ -2,8 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Services\Auth\LoginSessionService;
-use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -13,7 +11,6 @@ class HandleInertiaRequests extends Middleware
      * The root template that's loaded on the first page visit.
      *
      * @see https://inertiajs.com/server-side-setup#root-template
-     *
      * @var string
      */
     protected $rootView = 'app';
@@ -22,8 +19,10 @@ class HandleInertiaRequests extends Middleware
      * Determines the current asset version.
      *
      * @see https://inertiajs.com/asset-versioning
+     * @param  \Illuminate\Http\Request  $request
+     * @return string|null
      */
-    public function version(Request $request): ?string
+    public function version(Request $request)
     {
         return parent::version($request);
     }
@@ -32,41 +31,21 @@ class HandleInertiaRequests extends Middleware
      * Define the props that are shared by default.
      *
      * @see https://inertiajs.com/shared-data
-     *
-     * @return array<string, mixed>
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
      */
-    public function __construct(
-        private readonly LoginSessionService $loginSessionService
-    ) {
-        parent::__construct();
-    }
-
-    public function share(Request $request): array
+    public function share(Request $request)
     {
-        [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
-
-        if ($request->user()) {
-            $this->loginSessionService->loginSessionProcess();
-            $sessionData = session('AllUserDetails');
-
-            return [
-                ...parent::share($request),
-                'name' => config('app.name'),
-                'quote' => ['message' => trim($message), 'author' => trim($author)],
-                'auth' => [
-                    'user' => $sessionData['user'],
-                    'token' => $sessionData['token'],
-                    'fullAccessList' => $sessionData['user']->loginSessionBo->getFullAccessList(),
-                    'moduleAccessList' => $sessionData['user']->loginSessionBo->getModuleAccessList(),
-                ],
-            ];
-        }
-
-        return [
-            ...parent::share($request),
-            'name' => config('app.name'),
-            'quote' => ['message' => trim($message), 'author' => trim($author)],
-            'auth' => ['user' => null],
-        ];
+        return array_merge(parent::share($request), [
+            'auth' => [
+                'user' => $request->user(),
+            ],
+            'flash' => [
+                'message' => fn () => $request->session()->get('message'),
+            ],
+            'sideBarMenu' => [
+               'menu' => fn () => $request->session()->get('AllUserDetails')['sideBarMenu'],
+            ]
+        ]);
     }
 }

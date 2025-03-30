@@ -50,7 +50,7 @@ class JWTService
             $token = JWT::encode(['data' => $data], $publicKey, 'RS256');
             return $token;
         } catch (Exception $e) {
-            throw InvalidTokenException::withMessage();
+            throw $e;
         }
     }
 }
