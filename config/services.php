@@ -36,8 +36,8 @@ return [
     ],  
 
     'algolia' => [
-        'app_id' => env('ALGOLIA_APP_ID'),
-        'secret' => env('ALGOLIA_SECRET'),
+        'app_id' => env('VITE_ALGOLIA_APP_ID'),
+        'secret' => env('VITE_ALGOLIA_SEARCH_KEY'),
     ],
 
     'jwt' => [

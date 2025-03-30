@@ -1,9 +1,4 @@
-[2025-03-30 16:19:50] local.INFO: Destroying session  
-[2025-03-30 16:19:55] local.INFO: Full access check {"module":"dashboard","column":"dashboard","value":1} 
-[2025-03-30 16:19:55] local.INFO: Full access check {"module":"leads","column":"leads","value":1} 
-[2025-03-30 16:19:55] local.INFO: Full access check {"module":"quotes","column":"quotes","value":0} 
-[2025-03-30 16:19:55] local.INFO: Full access check {"module":"activities","column":"activities","value":0} 
-[2025-03-30 16:19:55] local.INFO: Full access check {"module":"contacts","column":"contacts","value":0} 
-[2025-03-30 16:19:55] local.INFO: Full access check {"module":"courses","column":"courses","value":0} 
-[2025-03-30 16:19:55] local.INFO: Full access check {"module":"settings","column":"settings","value":0} 
-[2025-03-30 16:19:55] local.INFO: Logging message to Betterstack {"message":"LoginSessionBo data converted to array","level":200,"context":{"user":{"name":"suraj","email":"shetty44444@gmail.com","isAuthenticated":true,"rememberToken":null,"emailVerifiedAt":null},"modules":[{"model_name":"Dashboard","model_slug":"dashboard","model_icon":"LayoutGrid"},{"model_name":"Leads","model_slug":"leads","model_icon":"Headset"},{"model_name":"Quotes","model_slug":"quotes","model_icon":"Quote"},{"model_name":"Activities","model_slug":"activities","model_icon":"SquareActivity"},{"model_name":"Contacts","model_slug":"contacts","model_icon":"Contact"},{"model_name":"Courses","model_slug":"courses","model_icon":"Book"},{"model_name":"Settings","model_slug":"settings","model_icon":"Settings"}],"fullAccessList":{"dashboard":true,"leads":true,"quotes":false,"activities":false,"contacts":false,"courses":false,"settings":false},"moduleAccessList":{"dashboard":{"view":true},"leads":{"view":true},"quotes":{"view":true},"activities":{"view":false},"contacts":{"view":false},"courses":{"view":false},"settings":{"view":false}},"sideBarMenu":[{"model_name":"Dashboard","model_slug":"dashboard","model_icon":"LayoutGrid"},{"model_name":"Leads","model_slug":"leads","model_icon":"Headset"},{"model_name":"Quotes","model_slug":"quotes","model_icon":"Quote"}]}} 
+[2025-03-30 19:23:37] local.INFO: Starting Algolia database import process  
+[2025-03-30 19:23:38] local.INFO: Batch import: 2 users processed  
+[2025-03-30 19:23:38] local.INFO: Final import counts - Users: 2  
+[2025-03-30 19:23:38] local.INFO: Algolia import completed successfully  

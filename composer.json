@@ -10,7 +10,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "algolia/algoliasearch-client-php": "^4.17",
+        "algolia/algoliasearch-client-php": "^4.18",
         "firebase/php-jwt": "^6.11",
         "inertiajs/inertia-laravel": "^2.0",
         "laravel/framework": "^12.0",

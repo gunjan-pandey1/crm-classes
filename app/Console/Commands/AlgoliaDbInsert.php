@@ -3,9 +3,10 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Algolia\AlgoliaSearch\SearchClient;
+use Algolia\AlgoliaSearch\Api\SearchClient;
 use App\Models\CrmUser;
 use Illuminate\Support\Facades\Log;
+
 class AlgoliaDbInsert extends Command
 {
     protected $signature = 'app:algolia-db-insert';
@@ -17,11 +18,32 @@ class AlgoliaDbInsert extends Command
         Log::info('Starting Algolia database import process');
 
         try {
+            // Initialize the Algolia client with your credentials
             $client = $this->initializeAlgoliaClient();
-            $indices = $this->initializeIndices($client);
-            $this->configureIndices($indices);
-            $this->importData($indices);
 
+            $totalUsers = 0;
+            // Process users in chunks of 100
+            CrmUser::chunk(100, function($users) use ($client, &$totalUsers) {
+                $records = $users->map(function($user) {
+                    return [
+                        'objectID' => rand(1, 1000000),
+                        'name'     => $user->name,
+                        'email'    => $user->email,
+                        'phone'    => $user->phone,
+                    ];
+                })->toArray();
+
+                // Save records to the specified Algolia index.
+                // This mimics the reference sample's approach.
+                $client->saveObjects('crm_shetty_class', $records);
+
+                $totalUsers += count($records);
+                $this->info("Imported {$totalUsers} users so far...");
+                Log::info("Batch import: {$totalUsers} users processed");
+            });
+
+            $this->info("Total records imported - Users: {$totalUsers}");
+            Log::info("Final import counts - Users: {$totalUsers}");
             $this->info('All records have been successfully imported to Algolia');
             Log::info('Algolia import completed successfully');
         } catch (\Exception $e) {
@@ -32,66 +54,12 @@ class AlgoliaDbInsert extends Command
 
     private function initializeAlgoliaClient()
     {
-        $this->info('Initializing Algolia client...');
-        Log::info('Initializing Algolia client');
-        
-        return SearchClient::create(
-            config('services.algolia.app_id'),
-            config('services.algolia.secret')
-        );
-    }
+        $appId = config('services.algolia.app_id');
+        $secret = config('services.algolia.secret');
 
-    private function initializeIndices($client)
-    {
-        $this->info('Initializing indices...');
-        Log::info('Initializing Algolia indices');
+        $this->info("Initializing Algolia client... AppID: {$appId}");
+        $this->info("Initializing Algolia client... Secret: {$secret}");
 
-        return [
-            'users' => $client->initIndex('users'),
-            'leads' => $client->initIndex('leads'),
-            'courses' => $client->initIndex('courses')
-        ];
-    }
-
-    private function configureIndices($indices)
-    {
-        $this->info('Configuring index settings...');
-        Log::info('Configuring Algolia index settings');
-
-        $indices['users']->setSettings([
-            'searchableAttributes' => [
-                'name',
-                'email',
-                'phone'
-            ]
-        ]);
-    }
-
-    private function importData($indices)
-    {
-        $this->info('Starting data import...');
-        Log::info('Beginning data import to Algolia');
-
-        // Import users
-        $totalUsers = 0;
-        CrmUser::chunk(100, function($users) use ($indices, &$totalUsers) {
-            $records = $users->map(function($user) {
-                return [
-                    'objectID' => $user->id,
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'phone' => $user->phone,
-                ];
-            })->toArray();
-            
-            $indices['users']->saveObjects($records);
-            $totalUsers += count($records);
-            
-            $this->info("Imported {$totalUsers} users so far...");
-            Log::info("Batch import: {$totalUsers} users processed");
-        });
-
-        $this->info("Total records imported - Users: {$totalUsers}");
-        Log::info("Final import counts - Users: {$totalUsers}");
+        return SearchClient::create($appId, $secret);
     }
 }

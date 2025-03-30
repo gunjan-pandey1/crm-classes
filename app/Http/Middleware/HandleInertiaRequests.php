@@ -44,7 +44,7 @@ class HandleInertiaRequests extends Middleware
                 'message' => fn () => $request->session()->get('message'),
             ],
             'sideBarMenu' => [
-               'menu' => fn () => $request->session()->get('AllUserDetails')['sideBarMenu'],
+               'menu' => fn () => $request->session()->get('AllUserDetails') ? $request->session()->get('AllUserDetails')['sideBarMenu'] : [],
             ]
         ]);
     }
