@@ -1,4 +1,0 @@
-[2025-03-30 19:23:37] local.INFO: Starting Algolia database import process  
-[2025-03-30 19:23:38] local.INFO: Batch import: 2 users processed  
-[2025-03-30 19:23:38] local.INFO: Final import counts - Users: 2  
-[2025-03-30 19:23:38] local.INFO: Algolia import completed successfully  

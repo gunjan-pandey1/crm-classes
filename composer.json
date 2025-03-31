@@ -17,6 +17,9 @@
         "laravel/scout": "^10.14",
         "laravel/tinker": "^2.10.1",
         "logtail/monolog-logtail": "^3.3",
+        "php-amqplib/php-amqplib": "^3.7",
+        "predis/predis": "^2.3",
+        "rap2hpoutre/fast-excel": "^5.6",
         "sentry/sentry-laravel": "^4.13",
         "tightenco/ziggy": "^2.4"
     },
