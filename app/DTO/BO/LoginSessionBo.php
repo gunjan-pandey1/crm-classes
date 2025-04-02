@@ -50,7 +50,7 @@ class LoginSessionBo
             $this->logError('Attempt to set null module data');
             throw new Exception('Module data is required');
         }
-        $this->modules = $modules->toArray();
+        $this->modules = $modules;
     }
 
     public function setFullAccessList(array $fullAccessList): void {

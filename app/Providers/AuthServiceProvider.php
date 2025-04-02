@@ -45,25 +45,13 @@ class AuthServiceProvider extends ServiceProvider
             // Fetch the user's full access rights (hasOne relationship)
             $fullAccessRight = $user->fullAccessRights;
         
-            // Log if no record exists
             if (!$fullAccessRight) {
                 Log::info('No full access rights record found', ['user_id' => $user->id]);
                 return false;
             }
         
-            // Convert module name to lowercase to match DB columns
             $moduleColumn = strtolower($module);
-        
-            // Check if the column exists and has value > 0
             $hasAccess = isset($fullAccessRight->$moduleColumn) && $fullAccessRight->$moduleColumn > 0;
-        
-            // Log the result
-            Log::info('Full access check', [
-                'module' => $module,
-                'column' => $moduleColumn,
-                'value' => $fullAccessRight->$moduleColumn ?? 0
-            ]);
-        
             return $hasAccess;
         });
 

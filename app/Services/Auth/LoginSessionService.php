@@ -2,14 +2,15 @@
 
 namespace App\Services\Auth;
 
-use App\Constants\CommonConstant;
 use Exception;
 use App\DTO\BO\LoginSessionBo;
+use App\DTO\DAO\ModelAccessDao;
+use App\Constants\CommonConstant;
 use App\Services\Auth\JWTService;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\Repository\ModelAccessRepository;
-use Illuminate\Support\Collection;
 
 class LoginSessionService
 {
@@ -19,6 +20,7 @@ class LoginSessionService
 
     public function __construct(
         private readonly LoginSessionBo $loginSessionBo,
+        private readonly ModelAccessDao $modelAccessDao,
         private readonly JWTService $jwtService,
         private readonly ModelAccessRepository $modelAccessRepository
     ) {}
@@ -39,7 +41,7 @@ class LoginSessionService
     private function initializeUserAndModules(): void
     {
         $this->loginSessionBo->setUser(Auth::user());
-        $modules = $this->modelAccessRepository->getModelList();
+        $modules = $this->modelAccessDao->getModelList();
         $this->loginSessionBo->setModules($modules);
         $this->processAccessLists($modules);
         $this->loginSessionBo->setSideBarMenu($this->buildMenuAccessList());

@@ -9,7 +9,7 @@ class DashboardController extends Controller
 {
     public function menuAccessController()
     {
-        $menuAccess = app(MenuAccessService::class)->getMenuList();
-        return view('crm.dashboard', compact('menuAccess'));
+        // $menuAccess = app(MenuAccessService::class)->getMenuList();
+        // return view('crm.dashboard', compact('menuAccess'));
     }
 }
