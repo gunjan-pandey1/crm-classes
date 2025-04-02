@@ -1,7 +1,7 @@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
-import { DatePicker } from '@/components/ui/date-picker';
+import { DatePickerWithRange } from '@/components/ui/date-picker';
 import { useState, useEffect, useRef } from 'react';
 import { DataTable } from 'simple-datatables';
 
@@ -155,17 +155,12 @@ export default function leads() {
       <Head title="Dashboard" />
       <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
         <div className="flex justify-end gap-4 mb-4">
-          <DatePicker
-            
-            value={fromDate}
-            onChange={setFromDate}
-            placeholder="From Date"
-          />
-          <DatePicker
-            value={toDate}
-            onChange={setToDate}
-            placeholder="To Date"
-          />
+        <DatePickerWithRange 
+                    fromDate={fromDate}
+                    toDate={toDate}
+                    onFromDateChange={setFromDate}
+                    onToDateChange={setToDate}
+                />
         </div>
         <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
           <div className="p-4 h-full">

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Models\CrmUser;
@@ -40,17 +41,24 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        // Define gates for full access rights
         Gate::define('full-access', function (CrmUser $user, string $module) {
-            $fullAccessRights = $user->fullAccessRights;
-            return $fullAccessRights && $fullAccessRights->$module > 0;
+            // Fetch the user's full access rights (hasOne relationship)
+            $fullAccessRight = $user->fullAccessRights;
+        
+            if (!$fullAccessRight) {
+                Log::info('No full access rights record found', ['user_id' => $user->id]);
+                return false;
+            }
+        
+            $moduleColumn = strtolower($module);
+            $hasAccess = isset($fullAccessRight->$moduleColumn) && $fullAccessRight->$moduleColumn > 0;
+            return $hasAccess;
         });
 
-        // Define gates for module-specific access rights
         Gate::define('module-access', function (CrmUser $user, string $module, string $permission) {
             $accessRight = $user->accessRights()
-                ->where('module_name', $module)
-                ->first();
+                                ->where('module_name', $module)
+                                ->first();
 
             if (!$accessRight) {
                 return false;

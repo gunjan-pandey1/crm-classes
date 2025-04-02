@@ -4,7 +4,7 @@ namespace App\Policies;
 
 use App\Models\CrmUser;
 use App\Models\Course;
-use App\Services\AuthorizationService;
+use App\Services\Auth\AuthorizationService;
 
 class CoursePolicy
 {

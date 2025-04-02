@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class AccessRight extends Model
+class CrmAccessRight extends Model
 {
     use HasFactory;
     protected $table = 'crm_access_rights';

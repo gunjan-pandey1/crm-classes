@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('type', 50)->index()->nullable();
             $table->dateTime('schedule_from')->index()->nullable();
             $table->dateTime('schedule_to')->index()->nullable();
+            $table->integer('status')->nullable()->index()->default(1);
             $table->dateTime('created_at')->index()->useCurrent();
             // Remove updated_at as it's causing issues
         });

@@ -33,6 +33,20 @@ return [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
+    ],  
+
+    'algolia' => [
+        'app_id' => env('VITE_ALGOLIA_APP_ID'),
+        'secret' => env('VITE_ALGOLIA_SEARCH_KEY'),
     ],
 
+    'jwt' => [
+        'private_key_file_full_path' => env('JWT_PRIVATE_KEY_FILE_FULL_PATH'),
+        'passphrase_app' => env('JWT_PASSPHRASE_APP'),
+    ],
+
+    'betterstack' => [
+        'source_token' => env('BETTERSTACK_SOURCE_TOKEN'),
+        'endpoint' => env('BETTERSTACK_ENDPOINT', 'https://s1256052.eu-nbg-2.betterstackdata.com'),
+    ],
 ];

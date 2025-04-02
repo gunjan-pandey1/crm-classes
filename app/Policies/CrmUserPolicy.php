@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\CrmUser;
-use App\Services\AuthorizationService;
+use App\Services\Auth\AuthorizationService;
 
 class CrmUserPolicy
 {
