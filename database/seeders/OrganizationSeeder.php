@@ -12,15 +12,15 @@ class OrganizationSeeder extends Seeder
         // Create some predefined organizations
         $organizations = [
             [
-                'name' => 'Shetty Classes Main Branch',
+                'name' => 'BeUniqueClasses Main Branch',
                 'student_count' => 250
             ],
             [
-                'name' => 'Shetty Classes North Campus',
+                'name' => 'BeUniqueClasses North Campus',
                 'student_count' => 180
             ],
             [
-                'name' => 'Shetty Classes South Wing',
+                'name' => 'BeUniqueClasses South Wing',
                 'student_count' => 150
             ]
         ];

@@ -17,7 +17,7 @@ import AppLogoIcon from './app-logo-icon';
 
 const mainNavItems: NavItem[] = [
     {
-        title: 'Dashboard Shetty Classes' ,
+        title: 'Dashboard BeUnique Classes' ,
         url: '/dashboard',
         icon: LayoutGrid,
     },
