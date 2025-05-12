@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Lead;
+use App\Models\Activity;
+use App\Models\CrmAccessRight;
+use App\Models\CrmFullAccessRight;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -36,12 +39,12 @@ class CrmUser extends Authenticatable
 
     public function accessRights(): HasMany
     {
-        return $this->hasMany(AccessRight::class, 'user_id');
+        return $this->hasMany(CrmAccessRight::class, 'user_id');
     }
 
     public function fullAccessRights(): HasOne
     {
-        return $this->hasOne(FullAccessRight::class, 'user_id');
+        return $this->hasOne(CrmFullAccessRight::class, 'user_id');
     }
 
     public function leads(): HasMany

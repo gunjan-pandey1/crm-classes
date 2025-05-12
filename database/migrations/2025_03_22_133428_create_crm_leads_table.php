@@ -25,6 +25,7 @@ return new class extends Migration
             $table->enum('stage', ['new', 'contacted', 'qualified', 'proposal', 'negotiation', 'closed_won', 'closed_lost'])->nullable();
             $table->enum('rotten_lead', ['yes', 'no'])->nullable();
             $table->dateTime('expected_close_date')->index()->nullable()->default('DEFAULT NULL');
+            $table->integer('status')->nullable()->index()->default(1);
             $table->dateTime('created_at')->index()->useCurrent();
             $table->dateTime('updated_at')->index()->useCurrent();
         });

@@ -13,6 +13,7 @@ class CrmFullAccessRight extends Model
 
     protected $fillable = [
         'user_id',
+        'dashboard',
         'leads',
         'quotes',
         'activities',
@@ -22,6 +23,7 @@ class CrmFullAccessRight extends Model
     ];
 
     protected $casts = [
+        'dashboard' => 'integer',
         'leads' => 'integer',
         'quotes' => 'integer',
         'activities' => 'integer',

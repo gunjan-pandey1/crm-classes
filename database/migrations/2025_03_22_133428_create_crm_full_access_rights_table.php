@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('organization')->nullable();
             $table->integer('students')->nullable();
             $table->integer('courses')->nullable();
+            $table->integer('status')->nullable()->index()->default(1);
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
             $table->index('user_id');

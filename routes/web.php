@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Crm\LeadsController;
 
 Route::get('/', function () {
     return Inertia::render('auth/login');
@@ -17,5 +18,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('leads');
 });
 
+Route::post('leadsapi', [LeadsController::class, 'leadsprocess']);
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

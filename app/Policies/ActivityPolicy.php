@@ -4,7 +4,7 @@ namespace App\Policies;
 
 use App\Models\CrmUser;
 use App\Models\Activity;
-use App\Services\AuthorizationService;
+use App\Services\Auth\AuthorizationService;
 
 class ActivityPolicy
 {

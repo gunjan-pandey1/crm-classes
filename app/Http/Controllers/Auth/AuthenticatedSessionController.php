@@ -32,7 +32,10 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
+        // This line regenerates the session ID to prevent session fixation attacks
         $request->session()->regenerate();
+
+        $request->loginAccessAndProcess();
 
         return redirect()->intended(route('dashboard', absolute: false));
     }
