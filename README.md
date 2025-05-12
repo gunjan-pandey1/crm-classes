@@ -2,9 +2,9 @@
 
 A modern CRM system built with Laravel and React, specifically designed for managing educational classes and student interactions.
 
-# Security Measures in Loan Management System (Laravel & React)
+# Security Measures in CRM (Laravel & React)
 
-This document outlines the key security measures implemented in this loan management system built with Laravel 12 (backend) and React (frontend).
+This document outlines the key security measures implemented in this crm built with Laravel 12 (backend) and React (frontend).
 
 ## 1. SQL Injection Prevention (Laravel Backend)
 
